@@ -13,7 +13,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Spieltag</title>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js">
+
+</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--hc:#c2185b;--ac:#1e88e5}
@@ -66,6 +68,10 @@ body{
 .playerPromptActions{display:flex;gap:8px;justify-content:center}
 .playerPromptActions button{flex:1}
 .swapArrow{font-weight:700;background:rgba(0,0,0,.42);padding:8px 10px;border-radius:8px}
+
+.actionBtn.transparent{background:rgba(0,0,0,.42) !important}
+.actionBtn.transparent:hover{background:rgba(0,0,0,.60) !important}
+
 </style>
 </head>
 <body>
@@ -86,7 +92,7 @@ body{
 
     <div class="sec">
       <h2>Teams</h2>
-      <datalist id="teamSuggestions"></datalist>
+<datalist id="teamSuggestions"></datalist>
       <div class="teamRow"><input list="teamSuggestions" class="ti" id="tH" type="text" placeholder="Heimmannschaft" oninput="saveTeamNames()"><input class="tc" type="color" id="cH" value="#c2185b" onchange="applyColors()"></div>
       <div class="teamRow"><input list="teamSuggestions" class="ti" id="tAName" type="text" placeholder="Auswärtsmannschaft" oninput="saveTeamNames()"><input class="tc" type="color" id="cA" value="#1e88e5" onchange="applyColors()"></div>
     </div>
@@ -99,27 +105,27 @@ body{
         <input class="quickNo" id="swapOut" type="number" placeholder="Raus" inputmode="numeric">
         <div class="swapArrow">→</div>
         <input class="quickNo" id="swapIn" type="number" placeholder="Rein" inputmode="numeric">
+        <button class="bh" type="button" onclick="addSubstitution()" aria-label="Auswechslung speichern" title="Auswechslung speichern">↵</button>
       </div>
-      <button class="actionBtn gray" type="button" onclick="addSubstitution()">Auswechslung speichern</button>
       <div class="log" id="log_substitutions"></div>
     </div>
 
     <div class="sec">
-      <button class="actionBtn gray" type="button" onclick="uZ()">Letzte Aktion rückgängig</button>
-      <button class="actionBtn gray" type="button" onclick="rA()">Alles zurücksetzen</button>
-      <button class="actionBtn blue" type="button" onclick="exportWorkbook()">Excel Export</button>
+      <button class="actionBtn transparent" type="button" onclick="uZ()">Letzte Aktion rückgängig</button>
+      <button class="actionBtn transparent" type="button" onclick="rA()">Alles zurücksetzen</button>
+      <button class="actionBtn transparent" type="button" onclick="exportWorkbook()">Excel Export</button>
     </div>
   </section>
 
   <section id="page_team" class="page">
     <div class="sec">
       <h2>Mein Team</h2>
-      <div class="subtle">Nummern und Spielernamen werden gespeichert und später automatisch verwendet.</div>
-      <table class="teamTable">
+<table class="teamTable">
         <thead><tr><th>Nr.</th><th>Name</th></tr></thead>
         <tbody id="teamRows"></tbody>
       </table>
-      <button class="actionBtn blue" type="button" onclick="savePlayers(true)">Team speichern</button>
+<button class="bh" type="button" onclick="addPlayerRow()">+ Spieler</button>
+      <button class="actionBtn transparent" type="button" onclick="savePlayers(true)">Team speichern</button>
     </div>
   </section>
 
@@ -128,8 +134,8 @@ body{
       <h2>Saison</h2>
       
       <div id="seasonSummary"></div>
-      <button class="actionBtn gray" type="button" onclick="archiveCurrentMatch()">Aktuellen Spieltag zur Saison hinzufügen</button>
-      <button class="actionBtn gray" type="button" onclick="clearSeason()">Saison zurücksetzen</button>
+      <button class="actionBtn transparent" type="button" onclick="archiveCurrentMatch()">Aktuellen Spieltag zur Saison hinzufügen</button>
+      <button class="actionBtn transparent" type="button" onclick="clearSeason()">Saison zurücksetzen</button>
     </div>
   </section>
 </div>
@@ -139,8 +145,8 @@ body{
     <h3 id="playerPromptTitle">Spielernummer</h3>
     <input class="quickNo" id="playerPromptInput" type="number" inputmode="numeric" placeholder="Nummer">
     <div class="playerPromptActions">
-      <button class="actionBtn gray" type="button" onclick="closePlayerPrompt('')">Abbrechen</button>
-      <button class="actionBtn blue" type="button" onclick="confirmPlayerPrompt()">OK</button>
+      <button class="actionBtn transparent" type="button" onclick="closePlayerPrompt('')">Abbrechen</button>
+      <button class="actionBtn transparent" type="button" onclick="confirmPlayerPrompt()">OK</button>
     </div>
   </div>
 </div>
@@ -449,6 +455,15 @@ if(mo!=='idle') document.getElementById('tRow').classList.add('hd');
 uT(); startUITicker(); renderSeason();
 window.addEventListener('beforeunload',()=>{savePlayers(false);saveState();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){savePlayers(false);saveState();}});
+
+function addPlayerRow(){
+  savePlayers(false);
+  if(!Array.isArray(players)) return;
+  players.push({number:'', name:''});
+  renderTeamRows();
+  saveState();
+}
+
 </script>
 </body>
 </html>
