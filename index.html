@@ -12,10 +12,8 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title><span class="navLabel">Spieltag</span></title>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js">
-
-</script>
+<title>Spieltag</title>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--hc:#c2185b;--ac:#1e88e5}
@@ -26,154 +24,61 @@ body{
   min-height:100vh;-webkit-user-select:none;user-select:none;
 }
 .c{max-width:520px;margin:0 auto}
-
-
-
+.nav{display:flex;gap:8px;margin-bottom:10px}
+.nav button{flex:1;padding:12px;border:none;border-radius:10px;background:rgba(0,0,0,.46);color:#fff;font-weight:700;cursor:pointer}
+.nav button.active{background:#1565c0}
 .page{display:none}.page.active{display:block}
 .sec{padding:4px 0 5px;margin-bottom:2px}
-.box,.sec h2,#timer,#nsLabel,.tmr label,.log,.subtle,.seasonHead{background:rgba(0,0,0,.42);border-radius:8px}
+.box,.sec h2,#htLabel,#timer,#nsLabel,.tmr label,.log,.subtle,.seasonHead{background:rgba(0,0,0,.42);border-radius:8px}
 .sec h2{display:inline-block;padding:4px 10px;font-size:.95em;text-transform:uppercase;letter-spacing:.35px;margin-bottom:4px}
 #timerWrap{display:flex;justify-content:center;align-items:baseline;gap:8px;flex-wrap:wrap}
 #timer{font-size:2.5em;font-family:monospace;padding:4px 12px;background:rgba(0,0,0,.52);font-weight:700}
-
-
-
-
-
-#htLabel{
-  display:inline-block;
-  text-align:left;
-  background: rgba(0,0,0,.48);
-  padding:6px 10px;
-  border-radius:8px;
-  font-size:.85em;
-  color:#ffffff;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  font-weight:700;
-}
-
-
-
-
-
+#htLabel{display:inline-block;padding:4px 10px;font-size:.95em;text-transform:uppercase;letter-spacing:.35px;margin-bottom:4px;font-weight:700}
 #nsLabel{font-size:1.1em;font-family:monospace;padding:4px 10px;background:rgba(0,0,0,.52);color:#ffd180;min-height:1.2em}
 #btnStart,.actionBtn{display:block;width:100%;padding:13px;border:none;border-radius:10px;color:#fff;font-size:1.05em;font-weight:700;cursor:pointer;margin-top:6px}
-#btnStart{background:#2e7d32} #btnStart.run{background:#e65100} #btnStart.pau{background: rgba(0,0,0,.6)} #btnStart.ns{background:#d32f2f} #btnStart.next{background:#6a1b9a} #btnStart.done{background:#455a64}
-.actionBtn.gray{background:#78909c}.actionBtn.blue{background:rgba(0,0,0,.4)}
+#btnStart{background:#2e7d32} #btnStart.run{background:#e65100} #btnStart.pau{background:#1976d2} #btnStart.ns{background:#d32f2f} #btnStart.next{background:#6a1b9a} #btnStart.done{background:#455a64}
+.actionBtn.gray{background:#78909c}.actionBtn.blue{background:#1565c0}
 .teamRow{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .ti,.tm,.playerName,.playerNo,.quickNo{padding:10px;border:1px solid rgba(255,255,255,.35);border-radius:8px;background:rgba(255,255,255,.92);font-size:.95em;color:#111}
-.ti,.playerName{flex:1}.tc{width:42px;height:40px;border:none;border-radius:8px;background:#fff;cursor:pointer}.tm{width:90px;text-align:left;font-weight:700}
-.quickNo{width:92px;text-align:left;font-weight:700;padding:8px 6px}
+.ti,.playerName{flex:1}.tc{width:42px;height:40px;border:none;border-radius:8px;background:#fff;cursor:pointer}.tm{width:90px;text-align:center;font-weight:700}
+.quickNo{width:92px;text-align:center;font-weight:700;padding:8px 6px}
 .tmr{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:4px}.tmr label{padding:4px 8px}
 .rw{display:flex;align-items:center;justify-content:center;gap:8px}
-.rc{min-width:56px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.48);font:700 2.05em monospace;text-align:left}
-
-
-.bh,.ba{
-  background: linear-gradient(to top, var(--hc), #ffffff22);
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  padding:10px 24px;
-  font-size:1em;
-  font-weight:bold;
-  cursor:pointer;
-  min-width:88px;
-  height:44px;
-}
-
-
+.rc{min-width:56px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.48);font:700 2.05em monospace;text-align:center}
+.bh,.ba{border:none;border-radius:8px;padding:10px 24px;font-size:1.15em;font-weight:700;cursor:pointer;min-width:88px;height:46px;color:#fff}
 .bh{background:var(--hc)} .ba{background:var(--ac)}
 .log{font-size:.78em;margin-top:4px;padding:4px 8px;border-top:1px solid rgba(255,255,255,.25)} .log:empty{display:none}
-.teamTable{width:100%;border-collapse:separate;border-spacing:0 6px} .teamTable th{padding:8px 6px;font-size:.85em} .playerNo{width:72px;text-align:left;font-weight:700}
+.teamTable{width:100%;border-collapse:separate;border-spacing:0 6px} .teamTable th{padding:8px 6px;font-size:.85em} .playerNo{width:72px;text-align:center;font-weight:700}
 .subtle{padding:8px 10px;margin-bottom:8px;font-size:.9em;line-height:1.35}
 .seasonCard{background:rgba(0,0,0,.28);padding:10px;border-radius:12px;margin-bottom:8px}
 .seasonHead{padding:6px 8px;margin-bottom:8px;display:inline-block}
 .seasonGrid{width:100%;border-collapse:collapse;background:rgba(0,0,0,.22)}
-.seasonGrid th,.seasonGrid td{border:1px solid rgba(255,255,255,.75);padding:6px 8px;text-align:left}
+.seasonGrid th,.seasonGrid td{border:1px solid rgba(255,255,255,.75);padding:6px 8px;text-align:center}
 .seasonGrid th{background:rgba(0,0,0,.42)}
 .seasonGrid td.name{text-align:left}
 .swapRow{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:4px;flex-wrap:wrap}
+
+.playerPromptOverlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:18px;z-index:9999}
+.playerPromptOverlay.active{display:flex}
+.playerPromptBox{width:min(320px,100%);background:rgba(18,18,18,.96);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.35);text-align:center}
+.playerPromptBox h3{font-size:1em;margin-bottom:10px;letter-spacing:.2px}
+.playerPromptBox .quickNo{width:100%;font-size:1.2em;padding:12px 10px;margin-bottom:12px}
+.playerPromptActions{display:flex;gap:8px;justify-content:center}
+.playerPromptActions button{flex:1}
 .swapArrow{font-weight:700;background:rgba(0,0,0,.42);padding:8px 10px;border-radius:8px}
-
-.actionBtn.gray,.actionBtn.blue{
-  background: rgba(0,0,0,.48) !important;
-  color:#fff !important;
-  border:none;
-  border-radius:8px;
-  box-shadow: inset 0 1px 3px rgba(255,255,255,.08),0 1px 3px rgba(0,0,0,.25);
-  text-shadow:0 1px 3px rgba(0,0,0,.6);
-}
-
-
-.enterBtn{
-  background: var(--hc);
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  height:44px;
-  min-width:88px;
-  font-size:1.4em;
-  font-weight:bold;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.nav{display:flex;gap:8px;margin-bottom:10px}
-.nav button{
-  flex:1;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:transparent;
-  color:inherit;
-  font-weight:700;
-  cursor:pointer;
-}
-.nav button.active{background:transparent}
-.navLabel{
-  font-size:1.1em;
-  color:rgba(255,255,255,.45);
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  font-weight:700;
-  background:transparent !important;
-  padding:0;
-}
-.nav button.active .navLabel{color:#ffffff}
-
 </style>
 </head>
 <body>
 <div class="c">
   <div class="nav">
-    <button id="tabBtn_spieltag" class="active" onclick="showPage('spieltag')"><span class="navLabel">Spieltag</span></button>
-    <button id="tabBtn_team" onclick="showPage('team')"><span class="navLabel">Mein Team</span></button>
-    <button id="tabBtn_saison" onclick="showPage('saison')"><span class="navLabel">Saison</span></button>
+    <button id="tabBtn_spieltag" class="active" onclick="showPage('spieltag')">Spieltag</button>
+    <button id="tabBtn_team" onclick="showPage('team')">Mein Team</button>
+    <button id="tabBtn_saison" onclick="showPage('saison')">Saison</button>
   </div>
 
   <section id="page_spieltag" class="page active">
-    <div class="sec" style="text-align:left">
-      <div id="htLabel" style="text-align:left;font-size:.85em;color:#888;text-transform:uppercase;letter-spacing:.5px;">1. Halbzeit</div>
+    <div class="sec" style="text-align:center">
+      <div id="htLabel">1. Halbzeit</div>
       <div id="timerWrap"><div id="timer">00:00</div><div id="nsLabel"></div></div>
       <div class="tmr" id="tRow"><label>Minuten:</label><input class="tm" id="hM" type="number" value="45" min="1" max="120"></div>
       <button id="btnStart" type="button" onclick="tA()">Start</button>
@@ -188,18 +93,16 @@ body{
 
     <div id="statsWrap"></div>
 
-    
-<div class="sec">
-  <h2>Auswechslung</h2>
-  <div class="rw">
-    <input class="quickNo" id="swapIn" type="number" placeholder="Rein" inputmode="numeric">
-    <div class="swapArrow">→</div>
-    <input class="quickNo" id="swapOut" type="number" placeholder="Raus" inputmode="numeric">
-    <button class="enterBtn" type="button" onclick="addSubstitution()">↵</button>
-  </div>
-  <div class="log" id="log_substitutions"></div>
-</div>
-
+    <div class="sec">
+      <h2>Auswechslung</h2>
+      <div class="swapRow">
+        <input class="quickNo" id="swapOut" type="number" placeholder="Raus" inputmode="numeric">
+        <div class="swapArrow">→</div>
+        <input class="quickNo" id="swapIn" type="number" placeholder="Rein" inputmode="numeric">
+      </div>
+      <button class="actionBtn gray" type="button" onclick="addSubstitution()">Auswechslung speichern</button>
+      <div class="log" id="log_substitutions"></div>
+    </div>
 
     <div class="sec">
       <button class="actionBtn gray" type="button" onclick="uZ()">Letzte Aktion rückgängig</button>
@@ -210,8 +113,8 @@ body{
 
   <section id="page_team" class="page">
     <div class="sec">
-      <h2><span class="navLabel">Mein Team</span></h2>
-      <div class="subtle">.</div>
+      <h2>Mein Team</h2>
+      <div class="subtle">Nummern und Spielernamen werden gespeichert und später automatisch verwendet.</div>
       <table class="teamTable">
         <thead><tr><th>Nr.</th><th>Name</th></tr></thead>
         <tbody id="teamRows"></tbody>
@@ -222,13 +125,24 @@ body{
 
   <section id="page_saison" class="page">
     <div class="sec">
-      <h2><span class="navLabel">Saison</span></h2>
-      <div class="subtle">Hier werden alle gespeicherten <span class="navLabel">Spieltag</span>e zusammengefasst.</div>
+      <h2>Saison</h2>
+      
       <div id="seasonSummary"></div>
-      <button class="actionBtn gray" type="button" onclick="archiveCurrentMatch()">Aktuellen <span class="navLabel">Spieltag</span> zur <span class="navLabel">Saison</span> hinzufügen</button>
-      <button class="actionBtn gray" type="button" onclick="clearSeason()"><span class="navLabel">Saison</span> zurücksetzen</button>
+      <button class="actionBtn gray" type="button" onclick="archiveCurrentMatch()">Aktuellen Spieltag zur Saison hinzufügen</button>
+      <button class="actionBtn gray" type="button" onclick="clearSeason()">Saison zurücksetzen</button>
     </div>
   </section>
+</div>
+
+<div id="playerPrompt" class="playerPromptOverlay" aria-hidden="true">
+  <div class="playerPromptBox">
+    <h3 id="playerPromptTitle">Spielernummer</h3>
+    <input class="quickNo" id="playerPromptInput" type="number" inputmode="numeric" placeholder="Nummer">
+    <div class="playerPromptActions">
+      <button class="actionBtn gray" type="button" onclick="closePlayerPrompt('')">Abbrechen</button>
+      <button class="actionBtn blue" type="button" onclick="confirmPlayerPrompt()">OK</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -248,7 +162,7 @@ const STAT_DEFS=[
   {key:'fouls',title:'Fouls',homeId:'hfo',awayId:'afo',askPlayer:'both'}
 ];
 const ALL=STAT_DEFS.flatMap(s=>[s.homeId,s.awayId]);
-let mo='idle',tI=null,sec=0,hm=45,hn=1,nsS=0,h1T=0,h2T=0,h1NS=0,h2NS=0,runStartedAt=null,nsStartedAt=null,cs={},hist=[],logs={},players=[];
+let mo='idle',tI=null,sec=0,hm=45,hn=1,nsS=0,h1T=0,h2T=0,h1NS=0,h2NS=0,runStartedAt=null,nsStartedAt=null,cs={},hist=[],logs={},players=[],playerPromptResolve=null;
 ALL.forEach(id=>cs[id]=0);
 STAT_DEFS.forEach(s=>logs[s.key]=[]);
 logs.substitutions=[];
@@ -325,17 +239,46 @@ function renderLogs(){
   document.getElementById('log_substitutions').innerHTML = logs.substitutions.map(item=>`<div class="logItem">${item.t} - ${displayPlayer(item.out)} → ${displayPlayer(item.in)}</div>`).join('');
 }
 
-function askPlayerFor(id, mode){
-  if(mode==='none') return '';
-  const home = isHome(id);
-  if(mode==='homeOnly' && !home) return (prompt('Gegnerische Spielernummer:')||'').trim();
-  return (prompt('Spielernummer '+(home?'Heim':'Auswärts')+':')||'').trim();
+function openPlayerPrompt(title, placeholder='Nummer'){
+  const overlay=document.getElementById('playerPrompt');
+  const input=document.getElementById('playerPromptInput');
+  document.getElementById('playerPromptTitle').textContent=title;
+  input.value='';
+  input.placeholder=placeholder;
+  overlay.classList.add('active');
+  overlay.setAttribute('aria-hidden','false');
+  setTimeout(()=>{input.focus(); input.select();},20);
+  return new Promise(resolve=>{playerPromptResolve=resolve;});
 }
 
-function addStat(id,category,askMode){
-  refreshTimeState(); cs[id]++; document.getElementById(id).textContent=cs[id];
+function closePlayerPrompt(value=''){
+  const overlay=document.getElementById('playerPrompt');
+  overlay.classList.remove('active');
+  overlay.setAttribute('aria-hidden','true');
+  if(playerPromptResolve){
+    const resolve=playerPromptResolve;
+    playerPromptResolve=null;
+    resolve(String(value||'').trim());
+  }
+}
+
+function confirmPlayerPrompt(){
+  closePlayerPrompt(document.getElementById('playerPromptInput').value);
+}
+
+async function askPlayerFor(id, mode){
+  if(mode==='none') return '';
+  const home=isHome(id);
+  if(mode==='homeOnly' && !home) return await openPlayerPrompt('Gegnerische Spielernummer','Nummer');
+  return await openPlayerPrompt('Spielernummer '+(home?'Heim':'Auswärts'),'Nummer');
+}
+
+async function addStat(id,category,askMode){
+  refreshTimeState();
+  const player = await askPlayerFor(id, askMode);
+  cs[id]++;
+  document.getElementById(id).textContent=cs[id];
   const rec={kind:'counter',id,category,logAdded:false};
-  const player = askPlayerFor(id, askMode);
   if(askMode!=='none'){
     logs[category].push({t:getDisplayTimeForEvent(),team:isHome(id)?homeName():awayName(),player});
     rec.logAdded=true;
@@ -368,8 +311,7 @@ function refreshTimeState(){
   if(mo==='ns'&&nsStartedAt!==null){nsS=nsS+(nowSec()-nsStartedAt);nsStartedAt=nowSec();}
 }
 function updateLabelAndButton(){
-  if(mo==='idle'){
-    document.getElementById('tRow').style.display='none';document.getElementById('htLabel').textContent='1. Halbzeit';setButton('Start','');}
+  if(mo==='idle'){document.getElementById('htLabel').textContent='1. Halbzeit';setButton('Start','');}
   else if(mo==='run'){document.getElementById('htLabel').textContent=hn===1?'1. Halbzeit':'2. Halbzeit';setButton('Stop','run');}
   else if(mo==='pau'){document.getElementById('htLabel').textContent=hn===1?'1. Halbzeit pausiert':'2. Halbzeit pausiert';setButton('Weiter','pau');}
   else if(mo==='ns'){document.getElementById('htLabel').textContent=hn===1?'Nachspielzeit 1. Halbzeit':'Nachspielzeit 2. Halbzeit';setButton('Nachspielzeit stoppen','ns');}
@@ -389,15 +331,14 @@ function uT(){
 function startUITicker(){stopTicker(); if(mo==='run'||mo==='ns') tI=setInterval(()=>{uT();saveState();},250);}
 function hE(fromAuto){refreshTimeState();stopTicker();mo='ns';if(!fromAuto)nsS=0;nsStartedAt=nowSec();uT();startUITicker();saveState();}
 function finishPeriod(){refreshTimeState();stopTicker();if(mo==='ns'&&nsStartedAt!==null){nsS=getNsElapsed();nsStartedAt=null;} if(hn===1){h1T=hm*60;h1NS=nsS;mo='break';sec=0;nsS=0;}else{h2T=hm*60;h2NS=nsS;mo='done';nsS=h2NS;}uT();saveState();}
-function startHalf(halfNo){hn=halfNo;sec=0;nsS=0;runStartedAt=nowSec();nsStartedAt=null;mo='run';document.getElementById('tRow').style.display='none';uT();startUITicker();saveState();}
-function tA(){refreshTimeState();if(mo==='idle'){hm=parseInt(document.getElementById('hM').value,10)||45;if(hm<1)hm=45;document.getElementById('hM').value=hm;h1T=0;h2T=0;h1NS=0;h2NS=0;startHalf(1);return;}if(mo==='run'){sec=getRegElapsed();runStartedAt=null;mo='pau';document.getElementById('tRow').style.display='flex';uT();stopTicker();saveState();return;}if(mo==='pau'){document.getElementById('tRow').style.display='none';runStartedAt=nowSec();mo='run';uT();startUITicker();saveState();return;}if(mo==='ns'){document.getElementById('tRow').style.display='flex';finishPeriod();return;}if(mo==='break'){document.getElementById('tRow').style.display='none';startHalf(2);return;}}
+function startHalf(halfNo){hn=halfNo;sec=0;nsS=0;runStartedAt=nowSec();nsStartedAt=null;mo='run';document.getElementById('tRow').classList.add('hd');uT();startUITicker();saveState();}
+function tA(){refreshTimeState();if(mo==='idle'){hm=parseInt(document.getElementById('hM').value,10)||45;if(hm<1)hm=45;document.getElementById('hM').value=hm;h1T=0;h2T=0;h1NS=0;h2NS=0;startHalf(1);return;}if(mo==='run'){sec=getRegElapsed();runStartedAt=null;mo='pau';uT();stopTicker();saveState();return;}if(mo==='pau'){runStartedAt=nowSec();mo='run';uT();startUITicker();saveState();return;}if(mo==='ns'){finishPeriod();return;}if(mo==='break'){startHalf(2);return;}}
 
 function resetMatchData(){
   mo='idle';tI=null;sec=0;hm=45;hn=1;nsS=0;h1T=0;h2T=0;h1NS=0;h2NS=0;runStartedAt=null;nsStartedAt=null;hist=[];
   ALL.forEach(id=>cs[id]=0); STAT_DEFS.forEach(s=>logs[s.key]=[]); logs.substitutions=[];
 }
-function rA(){stopTicker();resetMatchData();ALL.forEach(id=>document.getElementById(id).textContent='0');document.getElementById('hM').value='45';
-  document.getElementById('tRow').style.display='flex';renderLogs();uT();saveState();}
+function rA(){stopTicker();resetMatchData();ALL.forEach(id=>document.getElementById(id).textContent='0');document.getElementById('hM').value='45';document.getElementById('tRow').classList.remove('hd');renderLogs();uT();saveState();}
 
 function playerStatsFromLogs(matchLogs, playerList, matchAway){
   const result={}, map={goals:'Tore',shotsOnTarget:'Schüsse aufs Tor',shotsOffTarget:'Schüsse vorbei',yellow:'Gelbe Karten',red:'Rote Karten',penalties:'Elfmeter',fouls:'Fouls'};
@@ -414,12 +355,12 @@ function playerStatsFromLogs(matchLogs, playerList, matchAway){
 }
 
 function currentMatchSnapshot(){refreshTimeState();savePlayers(false);return {createdAt:new Date().toISOString(),home:homeName(),away:awayName(),hm,h1T,h1NS,h2T,h2NS,counters:JSON.parse(JSON.stringify(cs)),logs:JSON.parse(JSON.stringify(logs)),players:JSON.parse(JSON.stringify(players))};}
-function archiveCurrentMatch(){const snap=currentMatchSnapshot();const list=JSON.parse(localStorage.getItem(MATCH_HISTORY_KEY)||'[]');list.push(snap);localStorage.setItem(MATCH_HISTORY_KEY,JSON.stringify(list));renderSeason();alert('<span class="navLabel">Spieltag</span> zur <span class="navLabel">Saison</span> hinzugefügt.');}
-function clearSeason(){if(!confirm('<span class="navLabel">Saison</span> wirklich zurücksetzen?'))return;localStorage.removeItem(MATCH_HISTORY_KEY);renderSeason();}
+function archiveCurrentMatch(){const snap=currentMatchSnapshot();const list=JSON.parse(localStorage.getItem(MATCH_HISTORY_KEY)||'[]');list.push(snap);localStorage.setItem(MATCH_HISTORY_KEY,JSON.stringify(list));renderSeason();alert('Spieltag zur Saison hinzugefügt.');}
+function clearSeason(){if(!confirm('Saison wirklich zurücksetzen?'))return;localStorage.removeItem(MATCH_HISTORY_KEY);renderSeason();}
 
 function renderSeason(){
   const host=document.getElementById('seasonSummary'); const matches=JSON.parse(localStorage.getItem(MATCH_HISTORY_KEY)||'[]');
-  if(!matches.length){host.innerHTML='<div class="subtle">Noch keine Spiele in der <span class="navLabel">Saison</span> gespeichert.</div>';return;}
+  if(!matches.length){host.innerHTML='<div class="subtle">Noch keine Spiele in der Saison gespeichert.</div>';return;}
   const totals={};
   matches.forEach(m=>{
     playerStatsFromLogs(m.logs,m.players,m.away).forEach(r=>{
@@ -427,7 +368,7 @@ function renderSeason(){
       else ['Tore','Schüsse aufs Tor','Schüsse vorbei','Gelbe Karten','Rote Karten','Elfmeter','Fouls'].forEach(k=>totals[r.number][k]+=r[k]);
     });
   });
-  let html=`<div class="seasonCard"><div class="seasonHead">Spiele in der <span class="navLabel">Saison</span>: <strong>${matches.length}</strong></div>`;
+  let html=`<div class="seasonCard"><div class="seasonHead">Spiele in der Saison: <strong>${matches.length}</strong></div>`;
   matches.forEach((m,i)=>html+=`<div class="subtle" style="margin-bottom:6px">${i+1}. ${m.home} - ${m.away}</div>`);
   html+=`<div style="overflow:auto"><table class="seasonGrid"><thead><tr><th>Nr.</th><th>Name</th><th>Tore</th><th>Schüsse aufs Tor</th><th>Schüsse vorbei</th><th>Gelbe Karten</th><th>Rote Karten</th><th>Elfmeter</th><th>Fouls</th></tr></thead><tbody>`;
   Object.values(totals).sort((a,b)=>Number(a.number)-Number(b.number)).forEach(r=>{html+=`<tr><td>${r.number}</td><td class="name">${r.name||''}</td><td>${r['Tore']}</td><td>${r['Schüsse aufs Tor']}</td><td>${r['Schüsse vorbei']}</td><td>${r['Gelbe Karten']}</td><td>${r['Rote Karten']}</td><td>${r['Elfmeter']}</td><td>${r['Fouls']}</td></tr>`;});
@@ -438,7 +379,7 @@ function exportWorkbook(){
   savePlayers(false);
   const snap=currentMatchSnapshot(), wb=XLSX.utils.book_new();
   const gegentore = snap.counters.ag||0;
-  const spieltag=[['<span class="navLabel">Spieltag</span>',''],['Heimmannschaft',snap.home],['Auswärtsmannschaft',snap.away],['Reguläre Spielzeit pro Halbzeit',ft2(snap.hm*60)],['1. Halbzeit regulär',ft2(snap.h1T)],['1. Halbzeit Nachspielzeit',ft2(snap.h1NS)],['2. Halbzeit regulär',ft2(snap.h2T)],['2. Halbzeit Nachspielzeit',ft2(snap.h2NS)],['',''],['Kategorie','Wert'],['Gegentore',gegentore]];
+  const spieltag=[['Spieltag',''],['Heimmannschaft',snap.home],['Auswärtsmannschaft',snap.away],['Reguläre Spielzeit pro Halbzeit',ft2(snap.hm*60)],['1. Halbzeit regulär',ft2(snap.h1T)],['1. Halbzeit Nachspielzeit',ft2(snap.h1NS)],['2. Halbzeit regulär',ft2(snap.h2T)],['2. Halbzeit Nachspielzeit',ft2(snap.h2NS)],['',''],['Kategorie','Wert'],['Gegentore',gegentore]];
   STAT_DEFS.forEach(s=>{spieltag.push([s.title+' Heim',snap.counters[s.homeId]||0]);spieltag.push([s.title+' Auswärts',snap.counters[s.awayId]||0]);});
   spieltag.push(['',''],['Dokumentierte Ereignisse','']);
   STAT_DEFS.forEach(s=>{
@@ -462,11 +403,11 @@ function exportWorkbook(){
     spieltag.push(['Zeitpunkt','Beschreibung']);
     snap.logs.substitutions.forEach(item=>spieltag.push([item.t, `${displayPlayer(item.out)} → ${displayPlayer(item.in)}`]));
   }
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(spieltag),'<span class="navLabel">Spieltag</span>');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(spieltag),'Spieltag');
 
   const teamRows=[['Nr.','Name','Tore','Schüsse aufs Tor','Schüsse vorbei','Gelbe Karten','Rote Karten','Elfmeter','Fouls']];
   playerStatsFromLogs(snap.logs,snap.players,snap.away).forEach(r=>teamRows.push([r.number,r.name,r['Tore'],r['Schüsse aufs Tor'],r['Schüsse vorbei'],r['Gelbe Karten'],r['Rote Karten'],r['Elfmeter'],r['Fouls']]));
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(teamRows),'<span class="navLabel">Mein Team</span>');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(teamRows),'Mein Team');
 
   const seasonRows=[['Nr.','Name','Tore','Schüsse aufs Tor','Schüsse vorbei','Gelbe Karten','Rote Karten','Elfmeter','Fouls']];
   const totals={};
@@ -477,7 +418,7 @@ function exportWorkbook(){
     });
   });
   Object.values(totals).sort((a,b)=>Number(a.number)-Number(b.number)).forEach(r=>seasonRows.push([r.number,r.name,r['Tore'],r['Schüsse aufs Tor'],r['Schüsse vorbei'],r['Gelbe Karten'],r['Rote Karten'],r['Elfmeter'],r['Fouls']]));
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(seasonRows),'<span class="navLabel">Saison</span>');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(seasonRows),'Saison');
   XLSX.writeFile(wb,'spieltag_export.xlsx');
 }
 
@@ -504,17 +445,10 @@ renderTeamRows();
 renderTeamSuggestions();
 ALL.forEach(id=>document.getElementById(id).textContent=cs[id]);
 applyColors(); renderLogs();
-
-if(mo==='idle' || mo==='pau' || mo==='done' || mo==='break'){ document.getElementById('tRow').style.display='flex'; } else { document.getElementById('tRow').style.display='none'; }
-
+if(mo!=='idle') document.getElementById('tRow').classList.add('hd');
 uT(); startUITicker(); renderSeason();
 window.addEventListener('beforeunload',()=>{savePlayers(false);saveState();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){savePlayers(false);saveState();}});
-
-
 </script>
-
-
-
 </body>
 </html>
