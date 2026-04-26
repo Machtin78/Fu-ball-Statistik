@@ -372,10 +372,65 @@ function startHalf(halfNo){hn=halfNo;sec=0;nsS=0;runStartedAt=nowSec();nsStarted
 function tA(){refreshTimeState();if(mo==='idle'){hm=parseInt(document.getElementById('hM').value,10)||45;if(hm<1)hm=45;document.getElementById('hM').value=hm;h1T=0;h2T=0;h1NS=0;h2NS=0;startHalf(1);return;}if(mo==='run'){sec=getRegElapsed();runStartedAt=null;mo='pau';uT();stopTicker();saveState();return;}if(mo==='pau'){runStartedAt=nowSec();mo='run';uT();startUITicker();saveState();return;}if(mo==='ns'){finishPeriod();return;}if(mo==='break'){startHalf(2);return;}}
 
 function resetMatchData(){
-  mo='idle';tI=null;sec=0;hm=45;hn=1;nsS=0;h1T=0;h2T=0;h1NS=0;h2NS=0;runStartedAt=null;nsStartedAt=null;hist=[];
-  ALL.forEach(id=>cs[id]=0); STAT_DEFS.forEach(s=>logs[s.key]=[]); logs.substitutions=[];
+  // Setzt nur den aktuellen Spieltag zurueck.
+  // Die Saison-Historie unter MATCH_HISTORY_KEY bleibt unveraendert.
+  stopTicker();
+
+  mo='idle';
+  sec=0;
+  hm=45;
+  hn=1;
+  nsS=0;
+  h1T=0;
+  h2T=0;
+  h1NS=0;
+  h2NS=0;
+  runStartedAt=null;
+  nsStartedAt=null;
+  hist=[];
+
+  // Spieltagswerte zuruecksetzen, aber benutzerdefinierte Kategorien behalten.
+  cs={};
+  logs={};
+  ensureStatStructures();
 }
-function rA(){stopTicker();resetMatchData();getAllCounterIds().forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='0';});document.getElementById('hM').value='45';document.getElementById('tRow').classList.remove('hd');renderLogs();uT();saveState();}
+function resetMatchPageInputs(){
+  const hM=document.getElementById('hM');
+  if(hM) hM.value='45';
+
+  const tH=document.getElementById('tH');
+  const tAName=document.getElementById('tAName');
+  if(tH) tH.value='';
+  if(tAName) tAName.value='';
+
+  const cH=document.getElementById('cH');
+  const cA=document.getElementById('cA');
+  if(cH) cH.value='#c2185b';
+  if(cA) cA.value='#1e88e5';
+
+  const swapOut=document.getElementById('swapOut');
+  const swapIn=document.getElementById('swapIn');
+  if(swapOut) swapOut.value='';
+  if(swapIn) swapIn.value='';
+}
+function rA(){
+  if(!confirm('Aktuellen Spieltag wirklich zuruecksetzen?')) return;
+
+  resetMatchData();
+  resetMatchPageInputs();
+
+  const tRow=document.getElementById('tRow');
+  if(tRow) tRow.classList.remove('hd');
+
+  // Anzeige komplett aus dem zurueckgesetzten Zustand neu aufbauen.
+  buildStats();
+  applyColors();
+  renderLogs();
+  uT();
+
+  // Nur den aktuellen Spielstand speichern, nicht die Saison-Historie loeschen.
+  saveState();
+}
 
 function playerStatsFromLogs(matchLogs, playerList, matchAway, statDefs){
   const defs=(statDefs&&statDefs.length?statDefs:getStatDefs()).filter(s=>s.askPlayer!=='none');
