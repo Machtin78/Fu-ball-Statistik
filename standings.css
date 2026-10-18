@@ -1,0 +1,24 @@
+.standingsHomeTile{grid-column:1/-1;min-height:94px}
+.standingsHomeTile .homeIcon{width:48px;height:48px}
+.standingsPage{min-width:0}
+.standingsTeamSwitch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.standingsTeamSwitch button{min-width:0;min-height:44px;padding:8px;border:1px solid rgba(255,255,255,.4);border-radius:10px;background:rgba(0,0,0,.48);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.standingsTeamSwitch button[aria-pressed="true"]{background:#17652f;border-color:#c5f0cf}
+.standingsStatus{min-height:23px;margin:9px 0;font-size:.85rem;line-height:1.35;color:#e5f1e7}
+.standingsSummary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}
+.standingsFact{padding:11px 5px;border:1px solid rgba(255,255,255,.24);border-radius:10px;background:rgba(0,0,0,.5);text-align:center}
+.standingsFact strong{display:block;font-size:1.28rem;line-height:1.2}
+.standingsFact span{display:block;margin-top:3px;font-size:.72rem}
+.standingsLeague{margin:9px 0 6px;font-size:.93rem;line-height:1.4}
+.standingsScroll{overflow-x:auto;max-width:100%;border-radius:10px;background:rgba(0,0,0,.55);-webkit-overflow-scrolling:touch}
+.standingsTable{width:100%;border-collapse:collapse;font-size:.84rem;font-variant-numeric:tabular-nums}
+.standingsTable th,.standingsTable td{padding:9px 5px;border-bottom:1px solid rgba(255,255,255,.18);white-space:nowrap;text-align:right}
+.standingsTable th:first-child,.standingsTable td:first-child{text-align:center}
+.standingsTable th:nth-child(2),.standingsTable td:nth-child(2){text-align:left;white-space:normal;overflow-wrap:anywhere;min-width:98px}
+.standingsTable th{font-size:.75rem;color:#d5ecda;background:rgba(0,0,0,.33)}
+.standingsTable tbody tr:last-child td{border-bottom:0}
+.standingsTable tr.standingsOwn{background:rgba(36,145,72,.56);font-weight:800}
+.standingsSource{margin-top:12px;font-size:.83rem;line-height:1.4}
+.standingsSource a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:520px){.standingsTable .standingsDetail{display:none}.standingsTable th,.standingsTable td{padding:10px 4px}.standingsTable{font-size:.79rem}}
+

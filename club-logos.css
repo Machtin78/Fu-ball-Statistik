@@ -1,0 +1,6 @@
+.teamRow .ti{min-width:0}
+.matchTeamLogo{flex:0 0 42px;width:42px;height:42px;padding:3px;border:1px solid rgba(255,255,255,.3);border-radius:9px;background:rgba(255,255,255,.92);object-fit:contain}
+.standingsTeamCell{display:inline-flex;align-items:center;gap:6px;min-width:0}
+.standingsTeamLogo{flex:0 0 23px;width:23px;height:23px;object-fit:contain;background:#fff;border-radius:4px;padding:1px}
+@media(max-width:380px){.matchTeamLogo{flex-basis:36px;width:36px;height:36px}.teamRow{gap:6px}}
+
